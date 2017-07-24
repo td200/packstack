@@ -68,6 +68,12 @@ class packstack::mariadb::services ()
           allowed_hosts => '%',
           charset       => 'utf8',
         }
+        class { '::ironic::inspector::db::mysql':
+          password      => hiera('CONFIG_IRONIC_DB_PW'),
+          host          => '%',
+          allowed_hosts => '%',
+          charset       => 'utf8',
+        }
     }
 
     if hiera('CONFIG_MANILA_INSTALL') == 'y' {

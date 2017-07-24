@@ -32,4 +32,14 @@ class packstack::ironic::rabbitmq ()
       kombu_ssl_keyfile     => $kombu_ssl_keyfile,
       kombu_ssl_certfile    => $kombu_ssl_certfile,
     }
+
+    #Ironic inspector
+    class { '::ironic::inspector::db':
+      database_connection   => "mysql+pymysql://ironic-inspector:${ironic_rabbitmq_cfg_ironic_db_pw}@${ironic_rabbitmq_cfg_mariadb_host}/ironic-inspector",
+    }
+    class { '::ironic::inspector':
+     debug                 => true,
+     #dnsmasq_interface => 'eth1',
+     enabled => false,
+    }
 }

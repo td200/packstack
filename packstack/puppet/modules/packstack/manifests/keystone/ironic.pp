@@ -12,4 +12,12 @@ class packstack::keystone::ironic ()
         admin_url    => $ironic_url,
         internal_url => $ironic_url,
     }
+
+    class { '::ironic::keystone::auth_inspector':
+        region       => hiera('CONFIG_KEYSTONE_REGION'),
+        password     => hiera('CONFIG_IRONIC_KS_PW'),
+        public_url   => $ironic_url,
+        admin_url    => $ironic_url,
+        internal_url => $ironic_url,
+    }
 }

@@ -15,5 +15,27 @@ class packstack::ironic ()
 
     class { '::ironic::client': }
 
-    class { '::ironic::conductor': }
+    #Enable pxe_ssh
+    class { '::ironic::conductor':
+      enabled_drivers => ['pxe_ipmitool','pxe_ssh'],
+    }
+
+    #Enable iPXE
+    class { '::ironic::drivers::pxe':
+       ipxe_enabled => true,
+       ipxe_timeout => 60,
+    }
+
+    # Configure access to other services
+    #include ::ironic::cinder
+    include ::ironic::drivers::inspector
+    include ::ironic::glance
+    include ::ironic::neutron
+    #include ::ironic::service_catalog
+    #include ::ironic::swift
+
+     class { '::ironic::inspector::authtoken':
+       auth_uri => hiera('CONFIG_KEYSTONE_PUBLIC_URL'),
+       password => hiera('CONFIG_IRONIC_KS_PW'),
+     }
 }
