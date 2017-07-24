@@ -270,7 +270,7 @@ def initConfig(controller):
              "CONF_NAME": "CONFIG_NEUTRON_ML2_TENANT_NETWORK_TYPES",
              "PROMPT": ("Enter a comma separated ordered list of "
                         "network_types to allocate as tenant networks"),
-             "OPTION_LIST": ["local", "vlan", "gre", "vxlan"],
+             "OPTION_LIST": ["local", "flat", "vlan", "gre", "vxlan"],
              "VALIDATORS": [validators.validate_multi_options],
              "DEFAULT_VALUE": "vxlan",
              "MASK_INPUT": False,
